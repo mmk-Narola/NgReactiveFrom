@@ -1,0 +1,76 @@
+<div class="row">
+  <div class="col-12">
+    <h3 class="text-center">Inline Edit Table Type-1(Row Editable)</h3>
+    <table class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr class="text-uppercase table-dark">
+          <th scope="col">Sr No</th>
+          <th scope="col">Name</th>
+          <th scope="col">User Name</th>
+          <th scope="col" style="width: 15%" class="text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody [formGroup]="inlineForm">
+        <tr *ngFor="let user of usersArray; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>
+            <div *ngIf="user.isEdit">
+              <input type="text" formControlName="name" class="form-control" />
+              <div class="text-danger" *ngIf="inlineForm.get('name')?.touched">
+                <span *ngIf="inlineForm.get('name')?.errors?.['required']">
+                  Required
+                </span>
+                <span *ngIf="inlineForm.get('name')?.errors?.['minlength']">
+                  3 Chars Required
+                </span>
+              </div>
+            </div>
+            <div *ngIf="!user.isEdit">
+              {{ user.name }}
+            </div>
+          </td>
+          <div *ngIf="user.isEdit">
+            <input
+              type="text"
+              formControlName="username"
+              class="form-control"
+            />
+
+            <div class="text-danger" *ngIf="inlineForm.get('name')?.touched">
+              <span *ngIf="inlineForm.get('username')?.errors?.['required']">
+                Required
+              </span>
+            </div>
+          </div>
+          <div *ngIf="!user.isEdit">
+            {{ user.username }}
+          </div>
+          <td style="width: 15%" class="text-center">
+            <div *ngIf="user.isEdit">
+              <button
+                type="submit"
+                class="btn btn-sm btn-success"
+                (click)="onUpdate(user)"
+              >
+                Update
+              </button>
+              <button
+                class="btn btn-sm btn-danger"
+                (click)="user.isEdit = false"
+              >
+                Cancel
+              </button>
+            </div>
+            <div *ngIf="!user.isEdit">
+              <button class="btn btn-sm btn-success" (click)="onEdit(user)">
+                Edit
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <app-inline-edit-method2></app-inline-edit-method2>
+</div>

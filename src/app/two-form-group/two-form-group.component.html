@@ -1,0 +1,61 @@
+<div class="container">
+  <h3>Select Payment Option</h3>
+  <form [formGroup]="firstFormGroup">
+    <select formControlName="selectOption">
+      <option>Select Option</option>
+      <option value="Option 1">Card</option>
+      <option value="Option 2">UPI</option>
+      <option value="Option 3">Net Banking</option>
+      <option value="Option 4">QR Code</option>
+    </select>
+  </form>
+  <br />
+
+  <form [formGroup]="secondFormGroup" (ngSubmit)="secondForm()">
+    <ng-container *ngIf="showCard">
+      <label for="card">Card Number:</label>
+      <input
+        type="text"
+        id="card"
+        formControlName="cardNum"
+        placeholder="Enter Card Number"
+      />&nbsp;
+      <label for="exDate">Expiry Date:</label>
+      <input type="date" formControlName="exDate" id="exDate" />&nbsp;
+      <label for="cvv">CVV:</label>
+      <input type="number" formControlName="cvv" id="cvv" />
+    </ng-container>
+
+    <ng-container *ngIf="showUpi">
+      <label for="upiNum">UPI Number:</label>
+      <input
+        type="text"
+        id="upiNum"
+        formControlName="upiNum"
+        placeholder="Enter UPI Id"
+      />&nbsp;
+    </ng-container>
+
+    <ng-container *ngIf="showNetBank">
+      <label for="bankName">Bank Name:</label>
+      <input
+        type="text"
+        id="bankName"
+        formControlName="bankName"
+        placeholder="Enter Bank Name"
+      />&nbsp;
+    </ng-container>
+
+    <ng-container *ngIf="showQrCode">
+      This is QrCode
+      <qrcode
+        [qrdata]="myAngularxQrCode"
+        [width]="300"
+        [errorCorrectionLevel]="'M'"
+      >
+      </qrcode>
+    </ng-container>
+
+    <button type="submit" class="btn btn-primary">Submit</button><br />
+  </form>
+</div>
